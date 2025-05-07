@@ -1,0 +1,15 @@
+server:
+  port: 9999
+
+spring:
+  kafka:
+    producer:
+      bootstrap-server: localhost:9092
+#Production if you have multiple broker you have declared it as below
+
+#spring:
+#  kafka:
+#    producer:
+#      bootstrap-servers:
+#        - kafka-broker1:9092
+#        - kafka-broker2:9092

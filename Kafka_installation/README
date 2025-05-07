@@ -29,46 +29,60 @@ using below command :
 
 then cd to /opt/kafka_2.13-2.8.1/bin
 
- Create a topic :
-                 >kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic quickstart
-
- Producer:
-           > kafka-console-producer.sh --topic quickstart  --bootstrap-server localhost:9092
-
-  Consumer :
-            > Kafka-console-consumer.sh —topic quickstart —from-beginning —bootstrap-server locationhost:9092
+    ***************************************************  Main Commands ********************************************************************
+    *
+    * Create a topic : > kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 2 --partitions 2 --topic quickstart
+    * ----------------
+    *
+    *
+    * Producer:        > kafka-console-producer.sh --topic quickstart  --bootstrap-server localhost:9092
+    * ----------
+    *
+    *
+    *  Consumer :      > Kafka-console-consumer.sh —topic quickstart —from-beginning —bootstrap-server locationhost:9092
+    *  ---------
+    *
+    ***************************************************************************************************************************************
 
 
 
 *********explain the command for topic creation :************
-kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 2 --partitions 2 --topic quickstart
+
+  ***************************************************************************************************************************************
+  *  create Topic:    kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 2 --partitions 2 --topic quickstart      *
+  ***************************************************************************************************************************************
 
 
 1) kafka-topics.sh: This is the Kafka script used to manage topics. It allows you to create, delete, list, and describe topics.
 
 2) --create: This flag indicates that you want to create a new topic.
 
-3) --zookeeper zookeeper:2181: This specifies the Zookeeper connection string. It tells Kafka where to find the Zookeeper instance, which in this case is running on the zookeeper service at port 2181.
+3) --zookeeper zookeeper:2181: This specifies the Zookeeper connection string. It tells Kafka where to find the Zookeeper instance,
+                               which in this case is running on the zookeeper service at port 2181.
 
-4) --replication-factor 2: This sets the replication factor for the topic. The replication factor determines how many copies of the data will be stored across different brokers. A replication factor of 2 means there will be two copies of the data.
+4) --replication-factor 2: This sets the replication factor for the topic. The replication factor determines how many
+                           copies of the data will be stored across different brokers. A replication factor of 2 means there
+                           will be two copies of the data.
 
-5) --partitions 2: This sets the number of partitions for the topic. Partitions allow a topic to be split into multiple segments, which can be distributed across different brokers. Having 2 partitions means the topic will be divided into two segments.
+5) --partitions 2: This sets the number of partitions for the topic. Partitions allow a topic to be split into multiple segments,
+                   which can be distributed across different brokers. Having 2 partitions means the topic will be divided into two segments.
 
 6) --topic quickstart: This specifies the name of the topic to be created. In this case, the topic name is quickstart.
 
 Summary
 --------
-This command creates a new Kafka topic named quickstart with the following characteristics:
+This command creates a new Kafka topic named "quickstart" with the following characteristics:
 
 It connects to the Zookeeper instance at zookeeper:2181.
 The topic will have a replication factor of 2, meaning there will be two copies of the data.
 The topic will be divided into 2 partitions.
 
 
-******************explain the command for producer creation :***********************
+******************         Explain the command for producer creation             :***********************
 
-
-kafka-console-producer.sh --topic quickstart --bootstrap-server localhost:9092:
+*****************************************************************************************************************
+*    producer command:    kafka-console-producer.sh --topic quickstart --bootstrap-server localhost:9092        *
+*****************************************************************************************************************
 
 1)kafka-console-producer.sh: This is the Kafka script used to produce messages to a Kafka topic.
                              It allows you to send messages from the console to a specified topic.
@@ -100,8 +114,13 @@ Importance:
 - The bootstrap server maintains information about all brokers created in the cluster.
 When a Kafka client (producer or consumer) connects, it can fetch the list of all brokers, topics, and partitions, ensuring smooth communication.
 
-****************explain consumer command*************
-Kafka-console-consumer.sh —topic quickstart —from-beginning —bootstrap-server locationhost:9092
+********************************              Explain consumer command                *****************************
+
+
+************************************************************************************************************************
+*   consumer command: Kafka-console-consumer.sh —topic quickstart —from-beginning —bootstrap-server locationhost:9092  *
+************************************************************************************************************************
+
 
 1) kafka-console-consumer.sh: This is the Kafka script used to consume messages from a Kafka topic.
                               It allows you to read messages from the specified topic and display them in the console.
