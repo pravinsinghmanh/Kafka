@@ -1,0 +1,160 @@
+docker compose -f docker-compose.yml up -d:
+------ ------- -- ------------------ -- ---
+
+1) docker compose:
+------------------
+    This is the Docker Compose command-line tool used to define and run multi-container Docker applications.
+
+2) -f docker-compose.yml:
+------------------------
+      This option specifies the file to use for the
+      Docker Compose configuration. In this case, it's docker-compose.yml. If you don't specify this option,
+      Docker Compose will look for a docker-compose.yml file in the current directory by default.
+
+3) up:
+------
+  This command creates and starts the containers defined in the docker-compose.yml file.
+It builds the images if they don't already exist and starts the services.
+
+4) -d:
+-------
+ This flag runs the containers in detached mode, meaning the containers
+ will run in the background and you won't see their logs in the terminal.
+
+
+then go to kafka container :
+using below command :
+   >docker exec -it kafka /bin/sh
+
+
+then cd to /opt/kafka_2.13-2.8.1/bin
+
+ Create a topic :
+                 >kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic quickstart
+
+ Producer:
+           > kafka-console-producer.sh --topic quickstart  --bootstrap-server localhost:9092
+
+  Consumer :
+            > Kafka-console-consumer.sh —topic quickstart —from-beginning —bootstrap-server locationhost:9092
+
+
+
+*********explain the command for topic creation :************
+kafka-topics.sh --create --zookeeper zookeeper:2181 --replication-factor 2 --partitions 2 --topic quickstart
+
+
+1) kafka-topics.sh: This is the Kafka script used to manage topics. It allows you to create, delete, list, and describe topics.
+
+2) --create: This flag indicates that you want to create a new topic.
+
+3) --zookeeper zookeeper:2181: This specifies the Zookeeper connection string. It tells Kafka where to find the Zookeeper instance, which in this case is running on the zookeeper service at port 2181.
+
+4) --replication-factor 2: This sets the replication factor for the topic. The replication factor determines how many copies of the data will be stored across different brokers. A replication factor of 2 means there will be two copies of the data.
+
+5) --partitions 2: This sets the number of partitions for the topic. Partitions allow a topic to be split into multiple segments, which can be distributed across different brokers. Having 2 partitions means the topic will be divided into two segments.
+
+6) --topic quickstart: This specifies the name of the topic to be created. In this case, the topic name is quickstart.
+
+Summary
+--------
+This command creates a new Kafka topic named quickstart with the following characteristics:
+
+It connects to the Zookeeper instance at zookeeper:2181.
+The topic will have a replication factor of 2, meaning there will be two copies of the data.
+The topic will be divided into 2 partitions.
+
+
+******************explain the command for producer creation :***********************
+
+
+kafka-console-producer.sh --topic quickstart --bootstrap-server localhost:9092:
+
+1)kafka-console-producer.sh: This is the Kafka script used to produce messages to a Kafka topic.
+                             It allows you to send messages from the console to a specified topic.
+
+2)--topic quickstart: This specifies the name of the topic to which you want to send messages.
+                      In this case, the topic name is quickstart.
+
+3)--bootstrap-server localhost:9092: This specifies the Kafka broker to connect to. The bootstrap-server option
+                                     is used to provide the address of the Kafka broker. Here, it's localhost:9092,
+                                     meaning the Kafka broker is running on the local machine at port 9092.
+
+Summary
+-------
+ This command starts a Kafka console producer that sends messages to the quickstart topic.
+ It connects to the Kafka broker running on localhost at port 9092.
+ Once you run this command, you can start typing messages in the console,
+     and each message will be sent to the specified Kafka topic.
+
+
+Q. What is the use of boostreap server ?
+Ans  : A bootstrap server in Kafka is a broker that a Kafka client (like a producer or consumer) initially
+connects to in order to discover the full Kafka cluster. The client uses the bootstrap server to fetch metadata about the cluster,
+such as the list of all brokers, topics, and partitions.
+This information allows the client to connect to the appropriate brokers for its operations.
+
+Importance:
+- Without a bootstrap server, brokers would become static in nature. To avoid this, a few brokers are designated as bootstrap servers.
+- Having more than one bootstrap server increases availability.
+- The bootstrap server maintains information about all brokers created in the cluster.
+When a Kafka client (producer or consumer) connects, it can fetch the list of all brokers, topics, and partitions, ensuring smooth communication.
+
+****************explain consumer command*************
+Kafka-console-consumer.sh —topic quickstart —from-beginning —bootstrap-server locationhost:9092
+
+1) kafka-console-consumer.sh: This is the Kafka script used to consume messages from a Kafka topic.
+                              It allows you to read messages from the specified topic and display them in the console.
+
+2) --topic quickstart: This specifies the name of the topic from which you want to consume messages.
+                       In this case, the topic name is quickstart.
+
+3) --from-beginning: This flag tells the consumer to read messages from the beginning of the topic.
+                     Without this flag, the consumer would only read new messages that arrive after the consumer starts.
+
+4) --bootstrap-server localhost:9092: This specifies the Kafka broker to connect to.
+                                      The bootstrap-server option is used to provide the address of the Kafka broker.
+                                      Here, it's localhost:9092, meaning the Kafka broker is running on the local machine at port 9092.
+
+Summary
+--------
+This command starts a Kafka console consumer that reads messages from the quickstart topic.
+It connects to the Kafka broker running on localhost at port 9092. The consumer will read all messages
+from the beginning of the topic and display them in the console.
+
+
+The kafka-console-consumer.sh script has several options besides --from-beginning that you can use to customize how you consume messages from a Kafka topic. Here are some of the key options:
+
+1) --max-messages <num>:
+
+This option allows you to specify the maximum number of messages to consume before the consumer exits.
+Example: --max-messages 10 will consume only 10 messages and then stop.
+2) --property <key=value>:
+
+This option allows you to set various properties for the consumer.
+Example: --property print.key=true will print the key of each message along with the value.
+3) --partition <partition>:
+
+This option allows you to specify the partition from which to consume messages.
+Example: --partition 0 will consume messages only from partition 0 of the topic.
+4) --offset <offset>:
+
+This option allows you to start consuming messages from a specific offset.
+Example: --offset 15 will start consuming messages from offset 15.
+5) --consumer.config <config-file>:
+
+This option allows you to specify a configuration file for the consumer.
+Example: --consumer.config consumer.properties will use the settings defined in consumer.properties.
+6) --timeout-ms <timeout>:
+
+This option allows you to specify the timeout in milliseconds for the consumer to wait for new messages.
+Example: --timeout-ms 5000 will wait for 5 seconds for new messages before timing out.
+Example Command
+Here’s an example command using some of these options:
+*******************************************************************************************************************************
+|  kafka-console-consumer.sh --topic quickstart --bootstrap-server localhost:9092 --max-messages 10 --property print.key=true |
+*******************************************************************************************************************************
+
+This command will consume up to 10 messages from the quickstart topic, print both the keys and values of the messages, and connect to the Kafka broker at localhost:9092.
+
+These options provide flexibility in how you consume messages, allowing you to tailor the behavior of the consumer to your specific needs.
