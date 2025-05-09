@@ -4,9 +4,13 @@ server:
 spring:
   kafka:
     producer:
-      bootstrap-server: localhost:9092
-#Production if you have multiple broker you have declared it as below
+      bootstrap-server: localhost:9093
+     # bootstrap-server: kafka1:9092
+     #Kafka clients don’t need to know all brokers up front. You only need to give 1–2 brokers as bootstrap-servers.
+     #Kafka will fetch the full broker list after connecting.
 
+
+#Production if you have multiple broker you have declared it as below
 #spring:
 #  kafka:
 #    producer:

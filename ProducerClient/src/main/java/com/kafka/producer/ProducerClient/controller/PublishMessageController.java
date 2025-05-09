@@ -23,4 +23,34 @@ public class PublishMessageController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/publish/create-topic-and-publish/{message}")
+    public ResponseEntity<?> createTopicAndPublish(@PathVariable String message){
+        try {
+            publisher.sendMessageToCreatedToptic(message);
+            return ResponseEntity.ok("Message send Successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @GetMapping("/publish/create-topic-by-config-and-publish/{message}")
+    public ResponseEntity<?> createTopicByC0nfigAndPublish(@PathVariable String message){
+        try {
+            publisher.sendMessageToConfigBasedCreatedToptic(message);
+            return ResponseEntity.ok("Message send Successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @GetMapping("/publish/create-topic-by-config-3-partitions-and-publish/{message}")
+    public ResponseEntity<?> createTopicByConfigWith3PartitionsAndPublish(@PathVariable String message){
+        try {
+            for(int i=0;i<1000000;i++) {
+                publisher.sendMessageToConfigWith3PartitionsBasedCreatedToptic(message+i);
+            }
+            return ResponseEntity.ok("Message send Successfully");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 }

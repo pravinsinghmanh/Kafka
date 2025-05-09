@@ -23,4 +23,40 @@ public class KafkaServerPublisher {
 
         });
     }
+
+    public void sendMessageToCreatedToptic(String message) {
+        CompletableFuture<SendResult<String, Object>> future = kafkaTempelte.send("publishMessageToCreatedToptic", message);
+        future.whenComplete((result, ex) -> {
+            if (ex == null) {
+                System.out.println("Send MSG : ["+message+ " ] Offset value : "+result.getRecordMetadata().offset());
+            } else {
+                System.out.println("Unable to MSG : [ "+message+ " ] reason : "+ex.getMessage());
+            }
+
+        });
+    }
+
+    public void sendMessageToConfigBasedCreatedToptic(String message) {
+        CompletableFuture<SendResult<String, Object>> future = kafkaTempelte.send("ProgramaticTopic", message);
+        future.whenComplete((result, ex) -> {
+            if (ex == null) {
+                System.out.println("Send MSG : ["+message+ " ] Offset value : "+result.getRecordMetadata().offset());
+            } else {
+                System.out.println("Unable to MSG : [ "+message+ " ] reason : "+ex.getMessage());
+            }
+
+        });
+    }
+
+    public void sendMessageToConfigWith3PartitionsBasedCreatedToptic(String message) {
+        CompletableFuture<SendResult<String, Object>> future = kafkaTempelte.send("3PartitionsTopic", message);
+        future.whenComplete((result, ex) -> {
+            if (ex == null) {
+                System.out.println("Send MSG : ["+message+ " ] Offset value : "+result.getRecordMetadata().offset());
+            } else {
+                System.out.println("Unable to MSG : [ "+message+ " ] reason : "+ex.getMessage());
+            }
+
+        });
+    }
 }
